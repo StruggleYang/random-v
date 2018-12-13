@@ -1,6 +1,9 @@
 # random-v
-
+by @华仔
 > A Vue.js project
+
+![](http://www.struy.top/18-12-11/72114207.jpg)
+![](http://www.struy.top/18-12-11/8319763.jpg)
 
 ## Build Setup
 
@@ -14,5 +17,3 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
