@@ -4,7 +4,7 @@
       <div
         class="big-img"
         style="background-position: center;background-size: cover;"
-        :style="{backgroundImage:'url(/static/img/'+currBg+')'}"
+        :style="{backgroundImage:'url(./static/img/'+currBg+')'}"
       ></div>
       <div class="but-box">
         <a class="circle-button" @click="execRedom">抽取({{currNumber}})</a>
@@ -105,7 +105,7 @@ export default {
         }
       } else {
         alert("像我这么优秀的人,再试一次");
-        ajax.get("/static/data/number.json", res => {
+        ajax.get("./static/data/number.json", res => {
           // 初始化描述数据
           localStorage.setItem(RANDOM_DATA_KEY, JSON.stringify(res.data));
         });
@@ -117,7 +117,7 @@ export default {
     reset: function() {
       this.mobile = this.isMobile();
       if (localStorage.getItem(RANDOM_DATA_KEY) === null) {
-        ajax.get("/static/data/number.json", res => {
+        ajax.get("./static/data/number.json", res => {
           // 初始化描述数据
           localStorage.setItem(RANDOM_DATA_KEY, JSON.stringify(res.data));
         });
