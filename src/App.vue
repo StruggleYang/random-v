@@ -3,11 +3,14 @@
     <div class="main" v-if="mobile">
       <div
         class="big-img"
-        style="background-position: center;background-size: cover;"
+        style="background-position: center;background-size: cover;position: relative;"
         :style="{backgroundImage:'url(./static/img/'+currBg+')'}"
-      ></div>
+      >
+        <div class="small-box" @click="resetAllData">{{ currNumber }}</div>
+        <div class="text-box">{{ currText }}</div>
+      </div>
       <div class="but-box">
-        <a class="circle-button" @click="execRedom">抽取({{currNumber}})</a>
+        <a class="circle-button" @click="execRedom">抽取</a>
       </div>
     </div>
     <div v-else style="margin-top: 60px;">请使用手机浏览器打开此页面！！！</div>
@@ -25,11 +28,12 @@ export default {
     return {
       mobile: false,
       currBg: "0.jpg",
+      currText: "感同身受",
       currNumber: 0
     };
   },
   mounted: function() {
-    this.reset();
+    this.init();
   },
   methods: {
     isMobile: function() {
@@ -66,8 +70,9 @@ export default {
          * 将抽到的数存储到已使用的数据内
          */
         var numbers = new Array();
-        numbers = JSON.parse(localStorage.getItem(NUMBERS_KEY));
-        if (numbers.length > 0) {
+        var n = localStorage.getItem(NUMBERS_KEY);
+        numbers = JSON.parse(n);
+        if (n !== null && numbers.length > 0) {
           var semen = this.redom(0, numbers.length);
           // 最终结果
           var random_v = numbers[semen];
@@ -88,7 +93,21 @@ export default {
             localStorage.setItem(USED_DATA_KEY, JSON.stringify(uses1));
           }
 
+          // 设置数据
+          var mate = JSON.parse(allData);
           this.currNumber = random_v;
+          var flag = false;
+          for (var i in mate) {
+            if (mate[i].num === random_v) {
+              this.currText = mate[i].text;
+              this.currBg = mate[i].img;
+              flag = true;
+            }
+          }
+          if (!flag) {
+            this.currText = "系统:没找到对应的数据";
+            this.currBg = "0.jpg";
+          }
         } else {
           var reset = confirm(
             "像我这么优秀的人,没有东西可以抽了，确认重置吗！"
@@ -98,9 +117,7 @@ export default {
             localStorage.setItem(USED_DATA_KEY, JSON.stringify(new Array()));
             localStorage.removeItem(NUMBERS_KEY);
             localStorage.removeItem(RANDOM_DATA_KEY);
-            this.reset();
-          } else {
-            alert("你什么都不做，我很慌");
+            this.init();
           }
         }
       } else {
@@ -114,7 +131,7 @@ export default {
     redom: function(m, n) {
       return Math.floor(Math.random() * (m - n) + n);
     },
-    reset: function() {
+    init: function() {
       this.mobile = this.isMobile();
       if (localStorage.getItem(RANDOM_DATA_KEY) === null) {
         ajax.get("./static/data/number.json", res => {
@@ -129,6 +146,15 @@ export default {
           arr.push(i);
         }
         localStorage.setItem(NUMBERS_KEY, JSON.stringify(arr));
+      }
+    },
+    resetAllData: function() {
+      var rest = confirm("重置所有抽取，重新开始？");
+      if (rest) {
+        localStorage.setItem(USED_DATA_KEY, JSON.stringify(new Array()));
+        localStorage.removeItem(NUMBERS_KEY);
+        localStorage.removeItem(RANDOM_DATA_KEY);
+        this.init();
       }
     }
   }
@@ -188,12 +214,39 @@ a {
 .circle-button {
   display: block;
   background-color: #69a8ff;
-  width: 150px;
-  height: 150px;
-  border-radius: 150px;
+  width: 140px;
+  height: 140px;
+  border-radius: 140px;
   font-size: 32px;
   color: #efefef;
   text-align: center;
-  line-height: 150px;
+  line-height: 140px;
+}
+.text-box {
+  width: 100%;
+  height: 60px;
+  background: hsla(0, 0%, 100%, 0.2);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  line-height: 60px;
+  font-size: 1.4em;
+  font-weight: 500;
+  color: #000;
+  border-top-left-radius: 4px;
+}
+.small-box {
+  display: -webkit-inline-box;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: hsla(0, 0%, 100%, 0.4);
+  border-radius: 32px;
+  font-size: 16px;
+  line-height: 32px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #000;
 }
 </style>
