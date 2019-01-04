@@ -28,8 +28,8 @@ export default {
     return {
       mobile: false,
       currBg: "0.jpg",
-      currText: "感同身受",
-      currNumber: 0
+      currText: "从这里开始",
+      currNumber: "-"
     };
   },
   mounted: function() {
@@ -110,7 +110,7 @@ export default {
           }
         } else {
           var reset = confirm(
-            "像我这么优秀的人,没有东西可以抽了，确认重置吗！"
+            "没有东西可以抽了，要不要重置！"
           );
           if (reset) {
             // 重置
@@ -121,7 +121,7 @@ export default {
           }
         }
       } else {
-        alert("像我这么优秀的人,再试一次");
+        alert("再试一次");
         ajax.get("./static/data/number.json", res => {
           // 初始化描述数据
           localStorage.setItem(RANDOM_DATA_KEY, JSON.stringify(res.data));
@@ -133,6 +133,9 @@ export default {
     },
     init: function() {
       this.mobile = this.isMobile();
+      this.currBg = "0.jpg",
+      this.currText = "从这里开始",
+      this.currNumber = "-"
       if (localStorage.getItem(RANDOM_DATA_KEY) === null) {
         ajax.get("./static/data/number.json", res => {
           // 初始化描述数据
@@ -142,7 +145,7 @@ export default {
       // 存种子数据
       if (localStorage.getItem(NUMBERS_KEY) === null) {
         var arr = new Array();
-        for (var i = 1; i <= 36; i++) {
+        for (var i = 1; i <= 34; i++) {
           arr.push(i);
         }
         localStorage.setItem(NUMBERS_KEY, JSON.stringify(arr));
