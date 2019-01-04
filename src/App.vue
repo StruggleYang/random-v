@@ -142,7 +142,7 @@ export default {
       // 存种子数据
       if (localStorage.getItem(NUMBERS_KEY) === null) {
         var arr = new Array();
-        for (var i = 1; i <= 100; i++) {
+        for (var i = 1; i <= 36; i++) {
           arr.push(i);
         }
         localStorage.setItem(NUMBERS_KEY, JSON.stringify(arr));
