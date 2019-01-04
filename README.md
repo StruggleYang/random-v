@@ -17,6 +17,17 @@ npm run dev
 # build for production with minification
 npm run build
 ```
+
+## docker run app
+```
+# build image
+sh dockerBuild.sh
+
+# run
+docker run --name random-v  -p 8668:80 -d  struy.luo/random-v:1.0.0
+```
+> open http://127.0.0.1:8668 
+
 ## push to demo branch
 
 ```
