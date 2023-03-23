@@ -2,8 +2,8 @@
 by @华仔
 > A Vue.js project
 
-![](http://www.struy.top/18-12-11/72114207.jpg)
-![](http://www.struy.top/18-12-11/8319763.jpg)
+![](http://img.struy.cn/18-12-11/72114207.jpg)
+![](http://img.struy.cn/18-12-11/8319763.jpg)
 
 ## Build Setup
 
